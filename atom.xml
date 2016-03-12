@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>宏超的技术博客</title>
+  <subtitle>不积跬步无以至千里、不积小流无以成江海</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2016-03-12T04:21:59.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>宏超</name>
+    <email>chc_cz0112@163.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一个很棒的博客框架Hexo详细介绍</title>
+    <link href="http://yoursite.com/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/"/>
+    <id>http://yoursite.com/2016/03/10/框架/hexo-intro/</id>
+    <published>2016-03-10T02:54:22.000Z</published>
+    <updated>2016-03-12T04:21:59.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;前面讲过用Github和Hexo搭建一个个人博客系统，本文将要详细讲解一下Hexo这个框架，使我们更多的了解Hexo的结构和使用，针对Hexo的官方文档进行了梳理。&lt;/p&gt;
+&lt;h1 id=&quot;Hexo&quot;&gt;&lt;a href=&quot;#Hexo&quot; class=&quot;headerlink&quot; title=&quot;Hexo&quot;&gt;&lt;/a&gt;Hexo&lt;/h1&gt;&lt;h2 id=&quot;什么是Hexo&quot;&gt;&lt;a href=&quot;#什么是Hexo&quot; class=&quot;headerlink&quot; title=&quot;什么是Hexo?&quot;&gt;&lt;/a&gt;什么是Hexo?&lt;/h2&gt;&lt;p&gt;Hexo是一款基于Node.js的快速、简单、强大的静态博客框架，它是由台湾的一位大学生写出来的，支持很多主题和Markdown书写格式，很炫酷并且也很好用，现在已经可以支持&lt;a href=&quot;http://duoshuo.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;多说&lt;/a&gt;了，很多人都在使用。&lt;/p&gt;
+&lt;h2 id=&quot;目录结构&quot;&gt;&lt;a href=&quot;#目录结构&quot; class=&quot;headerlink&quot; title=&quot;目录结构&quot;&gt;&lt;/a&gt;目录结构&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   ├── _drafts
+|   └── _posts
+└── themes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Hexo的目录结构简单：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;_config.yml 是博客的配置文件&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+# Site
+title: Hexo             #网站的标题
+subtitle:               #网站的副标题
+description:            #网站的描述信息
+author: John Doe        #作者本人
+language:               #网站所用语言 使用了2-lettter ISO-639-1 code，默认是en
+timezone:               #网站所用时区，默认使用了本机时区，例如：America/New_York, Japan, and UTC.
+
+# URL
+## If your site is put in a subdirectory, set url as &amp;apos;http://        yoursite.com/child&amp;apos; and root as &amp;apos;/child/&amp;apos;
+url: http://yoursite.com #网站url地址
+root: /                  #网站的根目录
+permalink: :year/:month/:day/:title/   #文章的固定链接
+permalink_defaults:      #文章固定链接每个段默认值
+
+# Directory
+source_dir: source       #source目录 保存文章
+public_dir: public       #public目录 产生静态网站
+tag_dir: tags            #标签目录
+archive_dir: archives    #归档目录
+category_dir: categories #分类目录
+code_dir: downloads/code #代码目录
+i18n_dir: :lang          #国际化语言目录
+skip_render:             #跳过指定文件的渲染,您可使用 glob 来配置路径
+
+# Writing
+new_post_name: :title.md #文章名格式
+default_layout: post     #默认布局，三种layout：post、page和draft
+titlecase: false         #标题首字母是否大写
+external_link: true      #是否在浏览器新的tab中打开外部链接
+filename_case: 0         #文件名大小写标识 1 小写 2 大写 0 不区分大小写
+render_drafts: false     #是否渲染_drafts目录下的文章
+post_asset_folder: false #是否打开asset目录管理，如果打开，每次新建文章时，都会创建一个同名的asset目录，与文章相关联,asset目录中可以放一些图片等资源
+relative_link: false     #是否开启链接相对于root目录
+future: true             #是否显示未来的文章
+highlight:               #代码块设置
+    enable: true
+    line_number: true
+    auto_detect: false
+    tab_replace:
+
+# Category &amp;amp; Tag
+default_category: uncategorized  #默认分类，这个跟permalink相关，如果permalink中有category，而文章没有分类信息，则文章链接中会显示uncategorized
+category_map:                    #分类别名
+tag_map:                         #标签别名
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD         #日期格式
+time_format: HH:mm:ss           #时间格式
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10             #一个页面最多显示的文章数目，0 表示显示所有 
+pagination_dir: page     #需要分页的目录
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: landscape        #主题名称 false 关闭主题
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:                 #部署设置
+  type:
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;package.json 应用程序数据，EJS， Stylus 和 Markdown是默认安装，可以卸载&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;scaffolds 是博客模板,里面包括文章模板(post.md),页面模板(page.md),草稿模板                (draft.md)&lt;/li&gt;
+&lt;li&gt;source 是博客文章目录&lt;/li&gt;
+&lt;li&gt;themes 存放主题风格文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;文章格式&quot;&gt;&lt;a href=&quot;#文章格式&quot; class=&quot;headerlink&quot; title=&quot;文章格式&quot;&gt;&lt;/a&gt;文章格式&lt;/h2&gt;&lt;p&gt;在source/_posts目录下，打开任意.md格式的文件，可以看到文件内容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: new article
+date: 2016-03-09 22:24:15
+tags:
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;文件的开头是属性，采用统一的yaml格式，用三条短横线分隔。下面是正文，正文支持MarkDown格式，这里推荐一个MarkDown编辑工具—-&lt;strong&gt;MacDown&lt;/strong&gt;，编辑文章内容可以使用MacDown，不过这个工具只在Mac系统下使用，其实也可以使用&lt;strong&gt;Mou&lt;/strong&gt;，这个工具也不错。&lt;/p&gt;
+&lt;h3 id=&quot;属性&quot;&gt;&lt;a href=&quot;#属性&quot; class=&quot;headerlink&quot; title=&quot;属性&quot;&gt;&lt;/a&gt;属性&lt;/h3&gt;&lt;p&gt;文章头包含的属性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;title    &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;文章的标题&lt;/li&gt;
+&lt;li&gt;layout   &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;文章布局名称，包含三种: page、post和draft&lt;/li&gt;
+&lt;li&gt;updated  &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;修改日期    文件的修改日期  &lt;/li&gt;
+&lt;li&gt;comments &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;是否开启评论    true/false&lt;/li&gt;
+&lt;li&gt;tags     &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;标签，添加标签用-tag1表示&lt;/li&gt;
+&lt;li&gt;categories &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;分类  添加分类用-category1表示&lt;/li&gt;
+&lt;li&gt;permalink  &amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;url中的名字    文件名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;categories:
+- Sports
+- Baseball
+tags:
+- Injury
+- Fight
+- Shocking
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;命令&quot;&gt;&lt;a href=&quot;#命令&quot; class=&quot;headerlink&quot; title=&quot;命令&quot;&gt;&lt;/a&gt;命令&lt;/h2&gt;&lt;p&gt;Hexo包含了一些简单的命令&lt;/p&gt;
+&lt;h3 id=&quot;init&quot;&gt;&lt;a href=&quot;#init&quot; class=&quot;headerlink&quot; title=&quot;init&quot;&gt;&lt;/a&gt;init&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo init [folder]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;初始化网站，如果folder不提供，则初始化到当前目录。&lt;/p&gt;
+&lt;h3 id=&quot;new&quot;&gt;&lt;a href=&quot;#new&quot; class=&quot;headerlink&quot; title=&quot;new&quot;&gt;&lt;/a&gt;new&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo new [layout] &amp;lt;title&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建一个新的文章，如果不设置layout，则使用_config.yml文件中&lt;strong&gt;default_layout&lt;/strong&gt;字段提供的内容。(new可以简写为n)&lt;/p&gt;
+&lt;h3 id=&quot;generate&quot;&gt;&lt;a href=&quot;#generate&quot; class=&quot;headerlink&quot; title=&quot;generate&quot;&gt;&lt;/a&gt;generate&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo generate
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生静态文件(generate可以简写为g) 参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-d （–deploy）生成文件后直接部署&lt;/li&gt;
+&lt;li&gt;-w, (–watch) 可以看文件的变化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;publish&quot;&gt;&lt;a href=&quot;#publish&quot; class=&quot;headerlink&quot; title=&quot;publish&quot;&gt;&lt;/a&gt;publish&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo publish [layout] &amp;lt;filename&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;发布一个草稿(publish可以简写为p)&lt;/p&gt;
+&lt;h3 id=&quot;server&quot;&gt;&lt;a href=&quot;#server&quot; class=&quot;headerlink&quot; title=&quot;server&quot;&gt;&lt;/a&gt;server&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo server
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开启本地服务(server可以简写为s)，默认地址&lt;a href=&quot;http://localhost:4000/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:4000/&lt;/a&gt;参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-p, （–port）重设默认端口&lt;/li&gt;
+&lt;li&gt;-s, （–static）静态模式，仅仅服务于静态文件  public 文件夹的监控的禁用的。你必须运行 hexo generate 之前启动服务器，通常用于生产环境&lt;/li&gt;
+&lt;li&gt;-l, （–log）开启log&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;deploy&quot;&gt;&lt;a href=&quot;#deploy&quot; class=&quot;headerlink&quot; title=&quot;deploy&quot;&gt;&lt;/a&gt;deploy&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;部署站点 (deploy可以简写为d) 参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-g, （–generate）部署后生成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;render&quot;&gt;&lt;a href=&quot;#render&quot; class=&quot;headerlink&quot; title=&quot;render&quot;&gt;&lt;/a&gt;render&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo render &amp;lt;file1&amp;gt; [file2] ...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;渲染文件(render可以简写为r) 参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-o, （–output）输出到指定文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;migrate&quot;&gt;&lt;a href=&quot;#migrate&quot; class=&quot;headerlink&quot; title=&quot;migrate&quot;&gt;&lt;/a&gt;migrate&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo migrate &amp;lt;type&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从其他的博客系统迁移过来(migrate可以简写为m)&lt;/p&gt;
+&lt;h3 id=&quot;clean&quot;&gt;&lt;a href=&quot;#clean&quot; class=&quot;headerlink&quot; title=&quot;clean&quot;&gt;&lt;/a&gt;clean&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo clean
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;清理缓存文件(db.json 和 public)&lt;/p&gt;
+&lt;h3 id=&quot;list&quot;&gt;&lt;a href=&quot;#list&quot; class=&quot;headerlink&quot; title=&quot;list&quot;&gt;&lt;/a&gt;list&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo list &amp;lt;type&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;列出所有的路由(list可以简写为l) type: page, post, route, tag, category&lt;/p&gt;
+&lt;h3 id=&quot;version&quot;&gt;&lt;a href=&quot;#version&quot; class=&quot;headerlink&quot; title=&quot;version&quot;&gt;&lt;/a&gt;version&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo version
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;显示版本信息(version可以简写为v)&lt;/p&gt;
+&lt;h3 id=&quot;Safe-mode&quot;&gt;&lt;a href=&quot;#Safe-mode&quot; class=&quot;headerlink&quot; title=&quot;Safe mode&quot;&gt;&lt;/a&gt;Safe mode&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo --safe
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;关闭加载插件和脚本，如果你安装新的插件后发生了问题，则可以用这个命令&lt;/p&gt;
+&lt;h3 id=&quot;Debug-mode&quot;&gt;&lt;a href=&quot;#Debug-mode&quot; class=&quot;headerlink&quot; title=&quot;Debug mode&quot;&gt;&lt;/a&gt;Debug mode&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo --debug
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;输入一些log信息到终端和debug.log&lt;/p&gt;
+&lt;h3 id=&quot;Customize-config-file-path&quot;&gt;&lt;a href=&quot;#Customize-config-file-path&quot; class=&quot;headerlink&quot; title=&quot;Customize config file path&quot;&gt;&lt;/a&gt;Customize config file path&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo --config custom.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用定制的custom.yml取代_config.yml。&lt;/p&gt;
+&lt;h3 id=&quot;Display-drafts&quot;&gt;&lt;a href=&quot;#Display-drafts&quot; class=&quot;headerlink&quot; title=&quot;Display drafts&quot;&gt;&lt;/a&gt;Display drafts&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo --draft
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;显示所有草稿文件&lt;/p&gt;
+&lt;h3 id=&quot;Customize-CWD&quot;&gt;&lt;a href=&quot;#Customize-CWD&quot; class=&quot;headerlink&quot; title=&quot;Customize CWD&quot;&gt;&lt;/a&gt;Customize CWD&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;$ hexo --cwd /path/to/cwd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;自定义当前工作目录的路径&lt;/p&gt;
+&lt;h2 id=&quot;参考链接&quot;&gt;&lt;a href=&quot;#参考链接&quot; class=&quot;headerlink&quot; title=&quot;参考链接&quot;&gt;&lt;/a&gt;参考链接&lt;/h2&gt;&lt;p&gt;Hexo的官方文档：&lt;a href=&quot;https://hexo.io/docs/tag-plugins.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hexo.io/docs/tag-plugins.html&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;小结&quot;&gt;&lt;a href=&quot;#小结&quot; class=&quot;headerlink&quot; title=&quot;小结&quot;&gt;&lt;/a&gt;小结&lt;/h1&gt;&lt;p&gt;Hexo是一个非常好的博客系统，容易上手，许多大神已经把博客迁移到Hexo上来了，我也是刚开始使用，以后会不断的更新博客内容。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;前面讲过用Github和Hexo搭建一个个人博客系统，本文将要详细讲解一下Hexo这个框架，使我们更多的了解Hexo的结构和使用，针对Hex
+    
+    </summary>
+    
+      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Github和Hexo搭建个人博客</title>
+    <link href="http://yoursite.com/2016/03/08/%E6%A1%86%E6%9E%B6/github-hexo-blog/"/>
+    <id>http://yoursite.com/2016/03/08/框架/github-hexo-blog/</id>
+    <published>2016-03-08T14:49:32.000Z</published>
+    <updated>2016-03-12T04:22:07.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;以前写博客都是在CSDN这些技术网站上面，感觉样式很固定，后来看了一些大神的技术博客，他们的博客界面简洁，定制化程度高。原来他们都是用&lt;a href=&quot;https://github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;搭配&lt;a href=&quot;https://github.com/hexojs/hexo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hexo&lt;/a&gt;来做的专属于自己的博客，顿时让我觉得热血沸腾，写博客还可以这么搞，自己也就动手搭建了一个。&lt;/p&gt;
+&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;p&gt;因为Hexo是静态博客，所以首先得在本地上搭建，搭建之前需要安装Node.js和Git。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;安装&lt;a href=&quot;https://nodejs.org/en/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Node.js&lt;/a&gt;官网下载最新版本，一路安装即可，安装完成后就可以使用node和npm命令。&lt;/li&gt;
+&lt;li&gt;安装Git，MAC系统Xcode安装后会自带Git，其他系统可以参考网上教程安装。&lt;/li&gt;
+&lt;li&gt;在&lt;a href=&quot;https://github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt;上创建账号，用Github来做博客的远程仓库，与本地的Hexo连接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面开始正式安装Hexo，打开终端输入：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g hexo 
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;创建博客目录&quot;&gt;&lt;a href=&quot;#创建博客目录&quot; class=&quot;headerlink&quot; title=&quot;创建博客目录&quot;&gt;&lt;/a&gt;创建博客目录&lt;/h1&gt;&lt;p&gt;我们创建一个文件夹来作为博客目录，比如：MyBlog，然后执行命令&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd MyBlog
+$ hexo init
+$ npm install
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;命令执行完后，会在MyBlog文件夹中生成如下目录结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   └── _posts
+└── themes 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Hexo的目录结构简单：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;_config.yml 是博客的配置文件&lt;/li&gt;
+&lt;li&gt;scaffolds 是博客文章模板&lt;/li&gt;
+&lt;li&gt;source 是博客文章目录&lt;/li&gt;
+&lt;li&gt;themes 存放主题风格文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;启动本地服务&quot;&gt;&lt;a href=&quot;#启动本地服务&quot; class=&quot;headerlink&quot; title=&quot;启动本地服务&quot;&gt;&lt;/a&gt;启动本地服务&lt;/h1&gt;&lt;p&gt;安装完成后，我们可以预览一下效果，在终端中执行命令（所有命令必须在博客目录下）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hexo server(或者hexo s)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;等服务启动之后，打开浏览器，输入&lt;a href=&quot;http://localhost:4000&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:4000&lt;/a&gt;,这个时候你就会看到一个简陋的页面，这就是hexo的初始页面，也是你的博客小窝。简陋不要紧，hexo有很多主题供你选择。&lt;/p&gt;
+&lt;h1 id=&quot;建立Github关联&quot;&gt;&lt;a href=&quot;#建立Github关联&quot; class=&quot;headerlink&quot; title=&quot;建立Github关联&quot;&gt;&lt;/a&gt;建立Github关联&lt;/h1&gt;&lt;p&gt;如果想要通过github地址来访问你的博客，你需要建立github和hexo的关联，具体步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;在github上建立与你用户名对应的仓库【username.github.io】，比如远程仓库地址为：&lt;strong&gt;&lt;a href=&quot;https://github.com/dayupcui/dayupcui.github.io.git&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/dayupcui/dayupcui.github.io.git&lt;/a&gt;&lt;/strong&gt;，或者 &lt;strong&gt;git@github.com:dayupcui/dayupcui.github.io.git&lt;/strong&gt;（需要创建ssh key）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在博客目录中找到_config.yml文件，在终端用&lt;strong&gt;vim _config.yml&lt;/strong&gt;命令打开，找到最下面，改为&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;deploy: 
+type: git
+repository: git@github.com:dayupcui/dayupcui.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在终端执行命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hexo deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;在浏览器中输入&lt;a href=&quot;http://dayupcui.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dayupcui.github.io/&lt;/a&gt;就可以访问到你的博客了，是不是很兴奋啊！！！ 但一定要记住账户名改成你的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;更换主题&quot;&gt;&lt;a href=&quot;#更换主题&quot; class=&quot;headerlink&quot; title=&quot;更换主题&quot;&gt;&lt;/a&gt;更换主题&lt;/h1&gt;&lt;p&gt;Hexo的默认主题是不是很丑，是不是很想换一个漂亮的主题、或者是很有个性的主题。只要在github中输入“hexo theme”就可以搜索到很多主题。我自己是比较喜欢简洁风格的主题，所以就选了&lt;strong&gt;jacman&lt;/strong&gt;，这里需要提一下唐巧大神，我也是参照他的博客风格，把jacman主题重新定制了一下。下面就以&lt;strong&gt;jacman&lt;/strong&gt;主题为列子说一下如何更换主题？&lt;/p&gt;
+&lt;h2 id=&quot;安装-1&quot;&gt;&lt;a href=&quot;#安装-1&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;在博客根目录下执行如下命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/wuchong/jacman.git themes/jacman
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;启用&quot;&gt;&lt;a href=&quot;#启用&quot; class=&quot;headerlink&quot; title=&quot;启用&quot;&gt;&lt;/a&gt;启用&lt;/h2&gt;&lt;p&gt;修改你的博客根目录下的_config.yml配置文件中的theme属性，将其设置为jacman。同时建议设置stylus属性中的compress值为true，会自动压缩 CSS 文件，hexo默认配置中不包含这一项，建议开启。如下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;theme: jacman
+stylus:
+    compress: true
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;更新&quot;&gt;&lt;a href=&quot;#更新&quot; class=&quot;headerlink&quot; title=&quot;更新&quot;&gt;&lt;/a&gt;更新&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;cd themes/jacman
+git pull origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;请先备份您主题目录下的 _config.yml 文件后再升级。&lt;/p&gt;
+&lt;h2 id=&quot;参考链接&quot;&gt;&lt;a href=&quot;#参考链接&quot; class=&quot;headerlink&quot; title=&quot;参考链接&quot;&gt;&lt;/a&gt;参考链接&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://wuchong.me/blog/2014/11/20/how-to-use-jacman/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://wuchong.me/blog/2014/11/20/how-to-use-jacman/&lt;/a&gt;&lt;br&gt;这里面有jacman主题配置的详细教程，大家可以参考里面的步骤操作。&lt;/p&gt;
+&lt;h1 id=&quot;发表文章&quot;&gt;&lt;a href=&quot;#发表文章&quot; class=&quot;headerlink&quot; title=&quot;发表文章&quot;&gt;&lt;/a&gt;发表文章&lt;/h1&gt;&lt;p&gt;忙完了博客的搭建，其实最重要的还是内容，大家要把博客做好，关键是内容一定要丰富，而且质量要高，Hexo创建文章也特别简单。&lt;/p&gt;
+&lt;p&gt;在博客根目录下，执行命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ hexo new &amp;quot;new article&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;之后在source/_posts目录下面，多了一个new-article.md的文件&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：新建、删除或修改文章后，不需要重启hexo server，刷新一下即可预览&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&quot;相关问题&quot;&gt;&lt;a href=&quot;#相关问题&quot; class=&quot;headerlink&quot; title=&quot;相关问题&quot;&gt;&lt;/a&gt;相关问题&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;找不到git部署&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ERROR Deployer not found: git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; 解决方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;搭建属于自己的博客确实是一件很爽的事情，hexo使用起来方便，搭配上github的远程服务，简直是绝配。不过这套框架需要我进一步验证，因为只用了几天，还没有发现什么问题，后续如果发现问题，我会不断的更新。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;以前写博客都是在CSDN这些技术网站上面，感觉样式很固定，后来看了一些大神的技术博客，他们的博客界面简洁，定制化程度高。原来他们都是用&lt;a 
+    
+    </summary>
+    
+      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
+    
+  </entry>
+  
+</feed>
