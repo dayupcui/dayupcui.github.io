@@ -4,9 +4,9 @@
   <subtitle>不积跬步无以至千里、不积小流无以成江海</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://dayupcui.github.io/"/>
   <updated>2016-03-12T04:21:59.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://dayupcui.github.io/</id>
   
   <author>
     <name>宏超</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>一个很棒的博客框架Hexo详细介绍</title>
-    <link href="http://yoursite.com/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/"/>
-    <id>http://yoursite.com/2016/03/10/框架/hexo-intro/</id>
+    <link href="http://dayupcui.github.io/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/"/>
+    <id>http://dayupcui.github.io/2016/03/10/框架/hexo-intro/</id>
     <published>2016-03-10T02:54:22.000Z</published>
     <updated>2016-03-12T04:21:59.000Z</updated>
     
@@ -195,17 +195,17 @@ tags:
     
     </summary>
     
-      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
+      <category term="框架" scheme="http://dayupcui.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://dayupcui.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>使用Github和Hexo搭建个人博客</title>
-    <link href="http://yoursite.com/2016/03/08/%E6%A1%86%E6%9E%B6/github-hexo-blog/"/>
-    <id>http://yoursite.com/2016/03/08/框架/github-hexo-blog/</id>
+    <link href="http://dayupcui.github.io/2016/03/08/%E6%A1%86%E6%9E%B6/github-hexo-blog/"/>
+    <id>http://dayupcui.github.io/2016/03/08/框架/github-hexo-blog/</id>
     <published>2016-03-08T14:49:32.000Z</published>
     <updated>2016-03-12T04:22:07.000Z</updated>
     
@@ -253,7 +253,7 @@ branch: master
 &lt;li&gt;&lt;p&gt;在终端执行命令：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;hexo deploy
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;li&gt;在浏览器中输入&lt;a href=&quot;http://dayupcui.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dayupcui.github.io/&lt;/a&gt;就可以访问到你的博客了，是不是很兴奋啊！！！ 但一定要记住账户名改成你的。&lt;/li&gt;
+&lt;li&gt;在浏览器中输入&lt;a href=&quot;http://dayupcui.github.io/&quot;&gt;http://dayupcui.github.io/&lt;/a&gt;就可以访问到你的博客了，是不是很兴奋啊！！！ 但一定要记住账户名改成你的。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h1 id=&quot;更换主题&quot;&gt;&lt;a href=&quot;#更换主题&quot; class=&quot;headerlink&quot; title=&quot;更换主题&quot;&gt;&lt;/a&gt;更换主题&lt;/h1&gt;&lt;p&gt;Hexo的默认主题是不是很丑，是不是很想换一个漂亮的主题、或者是很有个性的主题。只要在github中输入“hexo theme”就可以搜索到很多主题。我自己是比较喜欢简洁风格的主题，所以就选了&lt;strong&gt;jacman&lt;/strong&gt;，这里需要提一下唐巧大神，我也是参照他的博客风格，把jacman主题重新定制了一下。下面就以&lt;strong&gt;jacman&lt;/strong&gt;主题为列子说一下如何更换主题？&lt;/p&gt;
 &lt;h2 id=&quot;安装-1&quot;&gt;&lt;a href=&quot;#安装-1&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;在博客根目录下执行如下命令：&lt;/p&gt;
@@ -287,12 +287,12 @@ git pull origin master
     
     </summary>
     
-      <category term="框架" scheme="http://yoursite.com/categories/%E6%A1%86%E6%9E%B6/"/>
+      <category term="框架" scheme="http://dayupcui.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://dayupcui.github.io/tags/hexo/"/>
     
-      <category term="node.js" scheme="http://yoursite.com/tags/node-js/"/>
+      <category term="node.js" scheme="http://dayupcui.github.io/tags/node-js/"/>
     
   </entry>
   
