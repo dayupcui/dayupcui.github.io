@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://yoursite.com/2016/03/08/%E6%A1%86%E6%9E%B6/github-hexo-blog/</loc>
+    
+    <lastmod>2016-03-12T04:22:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/</loc>
+    
+    <lastmod>2016-03-12T04:21:59.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2016-03-11T09:43:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/index.html</loc>
+    
+    <lastmod>2016-03-08T10:39:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2016-03-08T10:39:32.000Z</lastmod>
+    
+  </url>
+  
+</urlset>
