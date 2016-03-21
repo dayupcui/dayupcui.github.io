@@ -1,0 +1,769 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>了解本地推送和它的iOS8新特性 | 宏超的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="宏超">
+    
+
+    
+    <meta name="description" content="前言最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。
+本地推送(UILocalNotification)本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：
+
+本地推送不需要服务器、由系统根据时间或者地点发出推送消息，展示形式和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解本地推送和它的iOS8新特性">
+<meta property="og:url" content="http://dayupcui.github.io/2016/03/16/iOS/local-notification/index.html">
+<meta property="og:site_name" content="宏超的技术博客">
+<meta property="og:description" content="前言最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。
+本地推送(UILocalNotification)本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：
+
+本地推送不需要服务器、由系统根据时间或者地点发出推送消息，展示形式和">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/plist.jpg">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/alert.png">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/local_1.png">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/local_2.png">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/local_3.png">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/local_4.png">
+<meta property="og:image" content="http://dayupcui.github.io/local-notification/local_5.png">
+<meta property="og:updated_time" content="2016-03-21T16:37:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解本地推送和它的iOS8新特性">
+<meta name="twitter:description" content="前言最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。
+本地推送(UILocalNotification)本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：
+
+本地推送不需要服务器、由系统根据时间或者地点发出推送消息，展示形式和">
+<meta name="twitter:image" content="http://dayupcui.github.io/local-notification/plist.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="宏超的技术博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="宏超的技术博客">宏超的技术博客</a></h1>
+				<h2 class="blog-motto">不积跬步无以至千里、不积小流无以成江海</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="/search/index.html" method="get" accept-							charset="utf-8"><label>Search</label>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" 								placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/16/iOS/local-notification/" title="了解本地推送和它的iOS8新特性" itemprop="url">了解本地推送和它的iOS8新特性</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="宏超" target="_blank" itemprop="author">宏超</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-16T14:14:16.000Z" itemprop="datePublished"> 发表于 2016-03-16 22:14</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本地推送-UILocalNotification"><span class="toc-number">2.</span> <span class="toc-text">本地推送(UILocalNotification)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于时间的本地推送"><span class="toc-number">2.1.</span> <span class="toc-text">基于时间的本地推送</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#属性说明："><span class="toc-number">2.1.1.</span> <span class="toc-text">属性说明：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于地点的本地推送"><span class="toc-number">2.2.</span> <span class="toc-text">基于地点的本地推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8推送新特性"><span class="toc-number">2.3.</span> <span class="toc-text">iOS8推送新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户动作-UIUserNotificationAction"><span class="toc-number">2.3.1.</span> <span class="toc-text">用户动作(UIUserNotificationAction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动作分组-UIUserNotificationCategory"><span class="toc-number">2.3.2.</span> <span class="toc-text">动作分组(UIUserNotificationCategory)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通知设置-UIUserNotificationSettings"><span class="toc-number">2.3.3.</span> <span class="toc-text">通知设置(UIUserNotificationSettings)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个Key值"><span class="toc-number">2.3.4.</span> <span class="toc-text">两个Key值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例说明"><span class="toc-number">2.3.5.</span> <span class="toc-text">举例说明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。</p>
+<h1 id="本地推送-UILocalNotification"><a href="#本地推送-UILocalNotification" class="headerlink" title="本地推送(UILocalNotification)"></a>本地推送(UILocalNotification)</h1><p>本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：</p>
+<ul>
+<li>本地推送不需要服务器、由系统根据时间或者地点发出推送消息，展示形式和远程推送是一样的。</li>
+<li>本地推送数量是有限制的，最多只能安排和展示64个，超出的通知都会被废弃</li>
+<li>本地推送由开发者设定时间、进入特定的地点或者iBeacon区域时触发，基于地点的推送是iOS8之后加入的，iOS8系统还加入可以指定用户触发的操作（Actions），甚至不需要启动app就可以处理。</li>
+</ul>
+<h2 id="基于时间的本地推送"><a href="#基于时间的本地推送" class="headerlink" title="基于时间的本地推送"></a>基于时间的本地推送</h2><p>基于时间的本地推送是指：本地推送消息的触发是提前设定好时间，系统根据触发时间来推送消息。创建一个本地推送如下：</p>
+<pre><code>UILocalNotification *locNotification = [[UILocalNotification alloc] init];
+locNotification.fireDate = [[NSDate date] dateByAddingTimeInterval:5];
+locNotification.timeZone = [NSTimeZone defaultTimeZone];
+locNotification.repeatInterval = 0;
+locNotification.repeatCalendar = [NSCalendar currentCalendar];
+locNotification.hasAction = YES;
+locNotification.alertAction = @&quot;打开&quot;;
+locNotification.alertTitle = @&quot;按时间推送&quot;;
+locNotification.soundName =    UILocalNotificationDefaultSoundName;
+locNotification.applicationIconBadgeNumber = 1;
+locNotification.userInfo = @{@&quot;key&quot;:@&quot;name&quot;};
+locNotification.category = @&quot;alert&quot;;
+[[UIApplication sharedApplication] scheduleLocalNotification:locNotification];
+</code></pre><h3 id="属性说明："><a href="#属性说明：" class="headerlink" title="属性说明："></a>属性说明：</h3><ul>
+<li><strong>fireDate</strong> — 触发推送的日期，如果设定为nil或者过去的时间，则立即触发。</li>
+<li><strong>timeZone</strong> — 时区，fireDate会根据不同的时区调整。</li>
+<li><strong>repeatInterval</strong> — 重复触发的时间间隔(NSCalendarUnit类型),意味着你不能随意设定，不能设置小于1分钟的间隔，否则会发生异常</li>
+<li><strong>repeatCalendar</strong> — 重复触发的时间间隔依据的日历设定</li>
+<li><strong>hasAction</strong> — 是否显示动作按钮</li>
+<li><strong>alertAction</strong> — 动作按钮的标题，在屏幕锁屏的时候，跟在“滑动来”文字之后</li>
+<li><strong>alertTitle</strong> — 通知的标题，一般在通知中心中显示通知的时候出现</li>
+<li><strong>soundName</strong> — 设置推送的声音，不设置就没有声音，系统默认声音为UILocalNotificationDefaultSoundName，自定义声音格式为wav,caf或者aiff，苹果官方没有写MP3，但是我设置MP3格式依然能用。声音长度不能超过30s，如果超过30s，则被系统默认声音取代。</li>
+<li><strong>applicationIconBadgeNumber</strong> — 应用icon右上角的badge。</li>
+<li><strong>userInfo</strong> — 通过推送可以传递一些信息</li>
+<li><strong>category</strong> — 一般在iOS8系统之上使用，表示一些action组，是UIUserNotificationCategory的identifier值。</li>
+</ul>
+<p><strong>主要讲一下repeatInterval 这个属性</strong></p>
+<p>repeatInterval 不可以随意设置任何值，它是NSCalendarUnit枚举类型，所以只能设置一些固定的值，可以看一下它所包含的枚举类型如下：</p>
+<ul>
+<li><strong>NSCalendarUnitEra</strong> 表示一个纪元，跟不同的日历相关，比如格林标准日历使用了公元前和公元后作为它的两个纪元。</li>
+<li><strong>NSCalendarUnitYear</strong> 每年</li>
+<li><strong>NSCalendarUnitMonth</strong> 每月</li>
+<li><strong>NSCalendarUnitDay</strong> 每天</li>
+<li><strong>NSCalendarUnitHour</strong> 每小时</li>
+<li><strong>NSCalendarUnitMinute</strong> 每分钟</li>
+<li><strong>NSCalendarUnitSecond</strong> 每秒</li>
+<li><strong>NSCalendarUnitWeekday</strong> 星期几  1-7</li>
+<li><strong>NSCalendarUnitWeekdayOrdinal</strong> 这个月第几个星期几 比如：2月份第3个星期三</li>
+<li><strong>NSCalendarUnitQuarter</strong> 一刻钟（15分钟）</li>
+<li><strong>NSCalendarUnitWeekOfMonth</strong> 一个月的第1周</li>
+<li><strong>NSCalendarUnitWeekOfYear</strong> 一年内的第1周</li>
+<li><strong>NSCalendarUnitYearForWeekOfYear</strong> 这年的这一周所关联的年份</li>
+<li><strong>NSCalendarUnitNanosecond</strong> Nano的每秒</li>
+<li><strong>NSCalendarUnitCalendar</strong> 日历的日历，具体没闹明白</li>
+<li><strong>NSCalendarUnitTimeZone</strong> 日历所在的时区</li>
+</ul>
+<p>假如你真想设置一个类似于5分钟这样的间隔，该这么做呢？办法只能是创建3个fireDate相差5分钟、repeatInterval为NSCalendarUnitQuarter的本地通知，这样就可以建立起循环。其他想自定义的间隔都可以按照这个思路来，只要限制在64个通知范围内就可以。</p>
+<h2 id="基于地点的本地推送"><a href="#基于地点的本地推送" class="headerlink" title="基于地点的本地推送"></a>基于地点的本地推送</h2><p>基于地点的推送是在iOS8系统引入的一项功能，我们需要在app中设置好一个坐标（经纬度）和一个半径（范围），当装有app的设备进入这个范围时，系统就会发出一个消息通知。创建一个本地推送步骤如下：</p>
+<ol>
+<li><p><strong>登记位置信息，获取用户的授权</strong></p>
+<pre><code>CLLocationManager *locMan = [[CLLocationManager alloc] init];
+locMan.delegate = self;
+[locMan requestWhenInUseAuthorization];
+</code></pre><p>在info.plist中加入如下图:</p>
+<p><img src="local-notification/plist.jpg" alt=""></p>
+<p>当程序运行到“[locMan requestWhenInUseAuthorization];”这一句时会弹出对话框:</p>
+<p><img src="local-notification/alert.png" alt=""></p>
+</li>
+<li><p><strong>获取用户权限的回调</strong></p>
+<pre><code>- (void)locationManager:(CLLocationManager *)manager
+didChangeAuthorizationStatus:(CLAuthorizationStatus)status 
+{
+       // check status to see if we’re authorized
+       BOOL canUseLocationNotifications =
+     (status == kCLAuthorizationStatusAuthorizedWhenInUse);
+       if (canUseLocationNotifications) {
+           [self startShowingLocationNotifications];
+    }
+}
+</code></pre></li>
+<li><p><strong>注册本地推送</strong></p>
+<pre><code>#define LOC_COORDINATE CLLocationCoordinate2DMake(40.2781921, 100.752936)
+#define LOC_RADIUS 100
+#define LOC_IDENTIFIER @&quot;identifier&quot;
+
+- (void)startShowingLocationNotifications 
+{
+    UILocalNotification *locNotification = [[UILocalNotification alloc]
+                                   init];
+    locNotification.alertBody = @“You have arrived!”;
+    locNotification.regionTriggersOnce = YES;
+    locNotification.region = [[CLCircularRegion alloc]
+                   initWithCenter:LOC_COORDINATE
+                           radius:LOC_RADIUS
+                       identifier:LOC_IDENTIFIER];
+    [[UIApplication sharedApplication]
+                 scheduleLocalNotification:localNotification];
+}
+</code></pre></li>
+<li><p><strong>监控地理位置</strong></p>
+<p> 如果你想监控设备是否进入或者离开设定的区域，有相关的代理方法，</p>
+<pre><code>//进入该区域
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+        NSLog(@&quot;%s&quot;,__func__);
+}
+
+//离开该区域
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    NSLog(@&quot;%s&quot;,__func__);
+}
+</code></pre></li>
+</ol>
+<h2 id="iOS8推送新特性"><a href="#iOS8推送新特性" class="headerlink" title="iOS8推送新特性"></a>iOS8推送新特性</h2><p>在ios8之后，注册推送之前必须调用[UIApplicationregisterUserNotificationSettings:]方法。其中引入了一些新特性，说明如下：</p>
+<ul>
+<li>用户收到推送通知可以自定义一些动作UIUserNotificationAction</li>
+<li>每个推送都可以设置一组动作，使用UIUserNotificationCategory</li>
+<li>这些动作分组在应用启动时就需要注册到UIUserNotificationSettings</li>
+</ul>
+<h3 id="用户动作-UIUserNotificationAction"><a href="#用户动作-UIUserNotificationAction" class="headerlink" title="用户动作(UIUserNotificationAction)"></a>用户动作(UIUserNotificationAction)</h3><p>用户行为是app收到推送后，可以操作的一些按钮和输入框，这里讲一下UIUserNotificationAction都包含哪些属性：</p>
+<ul>
+<li><strong>identifier</strong> 动作的唯一标识符，可以通过它获取动作本身。</li>
+<li><strong>title</strong> 动作按钮的title</li>
+<li><strong>behavior(iOS9引入的)</strong> 是个UIUserNotificationActionBehavior的枚举类型。包含两个枚举值：<br>UIUserNotificationActionBehaviorDefault 是默认行为。<br>UIUserNotificationActionBehaviorTextInput 显示一个输入框，用户可以输入内容。</li>
+<li><strong>parameters(iOS9引入的)</strong> 可以设定Action的一些属性类型。举例：可以改变输入框右边button的标题，只要把[NSDictionary dictionaryWithObject:@”评论” forKey:UIUserNotificationTextInputActionButtonTitleKey]赋值给parameters就可以。</li>
+<li><strong>activationMode</strong> 点击或者滑动推送打开应用的模式，是个UIUserNotificationActivationMode枚举类型，包含UIUserNotificationActivationModeForeground：打开展示应用。<br>UIUserNotificationActivationModeBackground：不打开应用或者在后台显示。这两种枚举值</li>
+<li><strong>authenticationRequired</strong> 进入应用之前是否解锁设备，如果activationMode为UIUserNotificationActivationModeForeground模式，则这个属性可以忽略。否则需要判断是否解锁。</li>
+<li><strong>destructive</strong> 动作按钮显示为红色背景，起到警示的作用。</li>
+</ul>
+<p><strong>注意创建动作时要使用UIMutableUserNotificationAction这个类</strong></p>
+<h3 id="动作分组-UIUserNotificationCategory"><a href="#动作分组-UIUserNotificationCategory" class="headerlink" title="动作分组(UIUserNotificationCategory)"></a>动作分组(UIUserNotificationCategory)</h3><p>可以把创建的一系列动作加入一个分组中，创建分组需要调用UIMutableUserNotificationCategory中的方法：</p>
+<pre><code>- (void)setActions:(nullable NSArray&lt;UIUserNotificationAction *&gt; *)actions forContext:(UIUserNotificationActionContext)context
+</code></pre><p>其中 actions为一系列动作的数组。<br>UIUserNotificationActionContext包含两个枚举值：UIUserNotificationActionContextDefault 表示推送通知最多能显示4个按钮<br>UIUserNotificationActionContextMinimal 表示推送通知最多能显示2个按钮</p>
+<p><strong>属性</strong><br><strong>identifier</strong>：分组的唯一标识符，一般用在UILocalNotification的Category。</p>
+<h3 id="通知设置-UIUserNotificationSettings"><a href="#通知设置-UIUserNotificationSettings" class="headerlink" title="通知设置(UIUserNotificationSettings)"></a>通知设置(UIUserNotificationSettings)</h3><p>把创建的分组加入到UIUserNotificationSettings中，需要调用方法： </p>
+<pre><code>+ (instancetype)settingsForTypes:(UIUserNotificationType)types
+                  categories:(nullable NSSet&lt;UIUserNotificationCategory *&gt; *)categories;
+</code></pre><p>其中types为UIUserNotificationType枚举类型。categories为一系列分组。</p>
+<h3 id="两个Key值"><a href="#两个Key值" class="headerlink" title="两个Key值"></a>两个Key值</h3><ul>
+<li><strong>UIUserNotificationTextInputActionButtonTitleKey</strong> 设置输入框右边action按钮的标题。</li>
+<li><strong>UIUserNotificationActionResponseTypedTextKey</strong> action触发回调，可以通过该值获取输入框的内容。</li>
+</ul>
+<h3 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h3><p>下面举例来说明新特性如何使用。</p>
+<p><strong>不带输入框</strong></p>
+<pre><code>- (void)registerLocalNotificationSettings
+{
+       UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+    action1.identifier = @&quot;action1&quot;;
+    action1.title = @&quot;接受&quot;;
+    action1.behavior =     UIUserNotificationActionBehaviorDefault;
+    action1.activationMode = UIUserNotificationActivationModeForeground;
+
+    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
+    action2.identifier = @&quot;action2&quot;;
+    action2.title = @&quot;拒绝&quot;;
+    action2.behavior = UIUserNotificationActionBehaviorDefault;
+    action2.activationMode = UIUserNotificationActivationModeBackground;
+    action1.authenticationRequired = YES;
+    action1.destructive = YES;
+
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+    category.identifier = @&quot;alert&quot;;
+    [category setActions:@[action1,action2] 
+    forContext:UIUserNotificationActionContextMinimal];
+
+    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:[NSSet setWithObjects:category, nil]];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
+</code></pre><p>创建一个基于时间的本地推送,然后把UILocalNotification的category赋值为”alert”，效果图如下:</p>
+<p><img src="local-notification/local_1.png" alt=""> <img src="local-notification/local_2.png" alt=""></p>
+<p>点击“接受”和“拒绝”，会调用代理回调方法如下：</p>
+<pre><code>- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler
+{
+    if ([identifier isEqualToString:@&quot;action1&quot;]) {
+        NSLog(@&quot;接受&quot;);
+    }
+    else if ([identifier isEqualToString:@&quot;action2&quot;])
+    {
+        NSLog(@&quot;拒绝&quot;);
+    }
+
+    if(completionHandler)
+    {
+        completionHandler();
+    }
+}
+</code></pre><p>根据action不同的identifier来做出相应的处理，这里“action1”表示<strong>“接受”</strong>按钮被点击，“action2”表示<strong>“拒绝”</strong>按钮被点击。</p>
+<p>这里要说明一下，你会发现不管是锁屏状态或者是顶部Banner条，都只能最多显示两个按钮，那么四个按钮该如何显示呢？需要你把推送显示效果变成弹出框的形式，如下图：</p>
+<p><img src="local-notification/local_3.png" alt=""></p>
+<p>操作步骤如下：打开设置–&gt;通知–&gt;应用本身-&gt;把“横幅”显示改成“提醒”显示，这样就OK了。</p>
+<p><strong>带输入框</strong></p>
+<pre><code>- (void)registerLocalNotificationSettings
+{
+       UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+    action1.identifier = @&quot;action1&quot;;
+    action1.parameters = @{UIUserNotificationTextInputActionButtonTitleKey:@&quot;评论&quot;};
+    action1.title = @&quot;评论&quot;;
+    action1.behavior =     UIUserNotificationActionBehaviorDefault;
+    action1.activationMode = UIUserNotificationActivationModeForeground;
+
+    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
+    action2.identifier = @&quot;action2&quot;;
+    action2.title = @&quot;拒绝&quot;;
+    action2.behavior = UIUserNotificationActionBehaviorDefault;
+    action2.activationMode = UIUserNotificationActivationModeBackground;
+    action1.authenticationRequired = YES;
+    action1.destructive = YES;
+
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+    category.identifier = @&quot;alert&quot;;
+    [category setActions:@[action1,action2] 
+    forContext:UIUserNotificationActionContextMinimal];
+
+    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:[NSSet setWithObjects:category, nil]];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
+</code></pre><p>需要创建一个本地通知UILocalNotification，然后把它的category属性赋值为“alert”，效果图如下</p>
+<p><img src="local-notification/local_4.png" alt=""></p>
+<p>点击“评论“按钮，效果变成如下：</p>
+<p><img src="local-notification/local_5.png" alt=""></p>
+<p>这个时候会出现输入框，让用户输入内容，输入完内容，点击右边的”评论“，应用调用回调方法如下:</p>
+<pre><code>- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+{
+    if ([identifier isEqualToString:@&quot;action1&quot;]) {
+        NSLog(@&quot;评论&quot;);
+        NSString *msg = responseInfo[UIUserNotificationActionResponseTypedTextKey];
+        NSLog(@&quot;msg = %@&quot;,msg);
+    }
+    else if ([identifier isEqualToString:@&quot;action2&quot;])
+    {
+            NSLog(@&quot;拒绝&quot;);
+    }
+
+    if(completionHandler)
+    {
+        completionHandler();
+        }
+}
+</code></pre><p>在代理回调方法中可通过UIUserNotificationActionResponseTypedTextKey这个键获取用户输入的内容。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上就是本地推送所有的内容，大家可以根据需求灵活的运用本地推送。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/iOS/">iOS</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/notification/">notification</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://dayupcui.github.io/2016/03/16/iOS/local-notification/" data-title="了解本地推送和它的iOS8新特性 | 宏超的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/03/10/框架/hexo-intro/"  title="一个很棒的博客框架Hexo详细介绍">
+ <strong>下一篇：</strong><br/> 
+ <span>一个很棒的博客框架Hexo详细介绍
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/03/16/iOS/local-notification/" data-title="了解本地推送和它的iOS8新特性" data-url="http://dayupcui.github.io/2016/03/16/iOS/local-notification/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本地推送-UILocalNotification"><span class="toc-number">2.</span> <span class="toc-text">本地推送(UILocalNotification)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于时间的本地推送"><span class="toc-number">2.1.</span> <span class="toc-text">基于时间的本地推送</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#属性说明："><span class="toc-number">2.1.1.</span> <span class="toc-text">属性说明：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于地点的本地推送"><span class="toc-number">2.2.</span> <span class="toc-text">基于地点的本地推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS8推送新特性"><span class="toc-number">2.3.</span> <span class="toc-text">iOS8推送新特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#用户动作-UIUserNotificationAction"><span class="toc-number">2.3.1.</span> <span class="toc-text">用户动作(UIUserNotificationAction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动作分组-UIUserNotificationCategory"><span class="toc-number">2.3.2.</span> <span class="toc-text">动作分组(UIUserNotificationCategory)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通知设置-UIUserNotificationSettings"><span class="toc-number">2.3.3.</span> <span class="toc-text">通知设置(UIUserNotificationSettings)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两个Key值"><span class="toc-number">2.3.4.</span> <span class="toc-text">两个Key值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例说明"><span class="toc-number">2.3.5.</span> <span class="toc-text">举例说明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/iOS/" title="iOS">iOS<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/node-js/" title="node.js">node.js<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/notification/" title="notification">notification<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://blog.devtang.com/" target="_blank" title="唐巧的技术博客">唐巧的技术博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://limboy.me/" target="_blank" title="limboy的博客">limboy的博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://zilongshanren.com/" target="_blank" title="子龙山人的博客">子龙山人的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="newslist">
+  <p class="asidetitle">技术资讯</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.cocoachina.com/" target="_blank" title="CocoaChina">CocoaChina</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.infoq.com/cn/" target="_blank" title="InfoQ">InfoQ</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.geekpark.net/" target="_blank" title="极客公园">极客公园</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="宏超">宏超</a>
+		
+		
+		</p>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','dfqPtDVZ4oh1aUajx5nN','2.0.0');
+</script>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"Charles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-63197250-3', 'auto');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1e80e25173964fdf6956c24a6d857fe6";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

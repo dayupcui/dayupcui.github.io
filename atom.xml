@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dayupcui.github.io/"/>
-  <updated>2016-03-12T04:21:59.000Z</updated>
+  <updated>2016-03-21T16:37:36.000Z</updated>
   <id>http://dayupcui.github.io/</id>
   
   <author>
@@ -14,6 +14,269 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>了解本地推送和它的iOS8新特性</title>
+    <link href="http://dayupcui.github.io/2016/03/16/iOS/local-notification/"/>
+    <id>http://dayupcui.github.io/2016/03/16/iOS/local-notification/</id>
+    <published>2016-03-16T14:14:16.000Z</published>
+    <updated>2016-03-21T16:37:36.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。&lt;/p&gt;
+&lt;h1 id=&quot;本地推送-UILocalNotification&quot;&gt;&lt;a href=&quot;#本地推送-UILocalNotification&quot; class=&quot;headerlink&quot; title=&quot;本地推送(UILocalNotification)&quot;&gt;&lt;/a&gt;本地推送(UILocalNotification)&lt;/h1&gt;&lt;p&gt;本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地推送不需要服务器、由系统根据时间或者地点发出推送消息，展示形式和远程推送是一样的。&lt;/li&gt;
+&lt;li&gt;本地推送数量是有限制的，最多只能安排和展示64个，超出的通知都会被废弃&lt;/li&gt;
+&lt;li&gt;本地推送由开发者设定时间、进入特定的地点或者iBeacon区域时触发，基于地点的推送是iOS8之后加入的，iOS8系统还加入可以指定用户触发的操作（Actions），甚至不需要启动app就可以处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;基于时间的本地推送&quot;&gt;&lt;a href=&quot;#基于时间的本地推送&quot; class=&quot;headerlink&quot; title=&quot;基于时间的本地推送&quot;&gt;&lt;/a&gt;基于时间的本地推送&lt;/h2&gt;&lt;p&gt;基于时间的本地推送是指：本地推送消息的触发是提前设定好时间，系统根据触发时间来推送消息。创建一个本地推送如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;UILocalNotification *locNotification = [[UILocalNotification alloc] init];
+locNotification.fireDate = [[NSDate date] dateByAddingTimeInterval:5];
+locNotification.timeZone = [NSTimeZone defaultTimeZone];
+locNotification.repeatInterval = 0;
+locNotification.repeatCalendar = [NSCalendar currentCalendar];
+locNotification.hasAction = YES;
+locNotification.alertAction = @&amp;quot;打开&amp;quot;;
+locNotification.alertTitle = @&amp;quot;按时间推送&amp;quot;;
+locNotification.soundName =    UILocalNotificationDefaultSoundName;
+locNotification.applicationIconBadgeNumber = 1;
+locNotification.userInfo = @{@&amp;quot;key&amp;quot;:@&amp;quot;name&amp;quot;};
+locNotification.category = @&amp;quot;alert&amp;quot;;
+[[UIApplication sharedApplication] scheduleLocalNotification:locNotification];
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;属性说明：&quot;&gt;&lt;a href=&quot;#属性说明：&quot; class=&quot;headerlink&quot; title=&quot;属性说明：&quot;&gt;&lt;/a&gt;属性说明：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;fireDate&lt;/strong&gt; — 触发推送的日期，如果设定为nil或者过去的时间，则立即触发。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;timeZone&lt;/strong&gt; — 时区，fireDate会根据不同的时区调整。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;repeatInterval&lt;/strong&gt; — 重复触发的时间间隔(NSCalendarUnit类型),意味着你不能随意设定，不能设置小于1分钟的间隔，否则会发生异常&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;repeatCalendar&lt;/strong&gt; — 重复触发的时间间隔依据的日历设定&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;hasAction&lt;/strong&gt; — 是否显示动作按钮&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;alertAction&lt;/strong&gt; — 动作按钮的标题，在屏幕锁屏的时候，跟在“滑动来”文字之后&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;alertTitle&lt;/strong&gt; — 通知的标题，一般在通知中心中显示通知的时候出现&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;soundName&lt;/strong&gt; — 设置推送的声音，不设置就没有声音，系统默认声音为UILocalNotificationDefaultSoundName，自定义声音格式为wav,caf或者aiff，苹果官方没有写MP3，但是我设置MP3格式依然能用。声音长度不能超过30s，如果超过30s，则被系统默认声音取代。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;applicationIconBadgeNumber&lt;/strong&gt; — 应用icon右上角的badge。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;userInfo&lt;/strong&gt; — 通过推送可以传递一些信息&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;category&lt;/strong&gt; — 一般在iOS8系统之上使用，表示一些action组，是UIUserNotificationCategory的identifier值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;主要讲一下repeatInterval 这个属性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;repeatInterval 不可以随意设置任何值，它是NSCalendarUnit枚举类型，所以只能设置一些固定的值，可以看一下它所包含的枚举类型如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitEra&lt;/strong&gt; 表示一个纪元，跟不同的日历相关，比如格林标准日历使用了公元前和公元后作为它的两个纪元。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitYear&lt;/strong&gt; 每年&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitMonth&lt;/strong&gt; 每月&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitDay&lt;/strong&gt; 每天&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitHour&lt;/strong&gt; 每小时&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitMinute&lt;/strong&gt; 每分钟&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitSecond&lt;/strong&gt; 每秒&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitWeekday&lt;/strong&gt; 星期几  1-7&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitWeekdayOrdinal&lt;/strong&gt; 这个月第几个星期几 比如：2月份第3个星期三&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitQuarter&lt;/strong&gt; 一刻钟（15分钟）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitWeekOfMonth&lt;/strong&gt; 一个月的第1周&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitWeekOfYear&lt;/strong&gt; 一年内的第1周&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitYearForWeekOfYear&lt;/strong&gt; 这年的这一周所关联的年份&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitNanosecond&lt;/strong&gt; Nano的每秒&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitCalendar&lt;/strong&gt; 日历的日历，具体没闹明白&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;NSCalendarUnitTimeZone&lt;/strong&gt; 日历所在的时区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;假如你真想设置一个类似于5分钟这样的间隔，该这么做呢？办法只能是创建3个fireDate相差5分钟、repeatInterval为NSCalendarUnitQuarter的本地通知，这样就可以建立起循环。其他想自定义的间隔都可以按照这个思路来，只要限制在64个通知范围内就可以。&lt;/p&gt;
+&lt;h2 id=&quot;基于地点的本地推送&quot;&gt;&lt;a href=&quot;#基于地点的本地推送&quot; class=&quot;headerlink&quot; title=&quot;基于地点的本地推送&quot;&gt;&lt;/a&gt;基于地点的本地推送&lt;/h2&gt;&lt;p&gt;基于地点的推送是在iOS8系统引入的一项功能，我们需要在app中设置好一个坐标（经纬度）和一个半径（范围），当装有app的设备进入这个范围时，系统就会发出一个消息通知。创建一个本地推送步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;登记位置信息，获取用户的授权&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CLLocationManager *locMan = [[CLLocationManager alloc] init];
+locMan.delegate = self;
+[locMan requestWhenInUseAuthorization];
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在info.plist中加入如下图:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/plist.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;当程序运行到“[locMan requestWhenInUseAuthorization];”这一句时会弹出对话框:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/alert.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;获取用户权限的回调&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)locationManager:(CLLocationManager *)manager
+didChangeAuthorizationStatus:(CLAuthorizationStatus)status 
+{
+       // check status to see if we’re authorized
+       BOOL canUseLocationNotifications =
+     (status == kCLAuthorizationStatusAuthorizedWhenInUse);
+       if (canUseLocationNotifications) {
+           [self startShowingLocationNotifications];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;注册本地推送&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#define LOC_COORDINATE CLLocationCoordinate2DMake(40.2781921, 100.752936)
+#define LOC_RADIUS 100
+#define LOC_IDENTIFIER @&amp;quot;identifier&amp;quot;
+
+- (void)startShowingLocationNotifications 
+{
+    UILocalNotification *locNotification = [[UILocalNotification alloc]
+                                   init];
+    locNotification.alertBody = @“You have arrived!”;
+    locNotification.regionTriggersOnce = YES;
+    locNotification.region = [[CLCircularRegion alloc]
+                   initWithCenter:LOC_COORDINATE
+                           radius:LOC_RADIUS
+                       identifier:LOC_IDENTIFIER];
+    [[UIApplication sharedApplication]
+                 scheduleLocalNotification:localNotification];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;监控地理位置&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 如果你想监控设备是否进入或者离开设定的区域，有相关的代理方法，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//进入该区域
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+        NSLog(@&amp;quot;%s&amp;quot;,__func__);
+}
+
+//离开该区域
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    NSLog(@&amp;quot;%s&amp;quot;,__func__);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;iOS8推送新特性&quot;&gt;&lt;a href=&quot;#iOS8推送新特性&quot; class=&quot;headerlink&quot; title=&quot;iOS8推送新特性&quot;&gt;&lt;/a&gt;iOS8推送新特性&lt;/h2&gt;&lt;p&gt;在ios8之后，注册推送之前必须调用[UIApplicationregisterUserNotificationSettings:]方法。其中引入了一些新特性，说明如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户收到推送通知可以自定义一些动作UIUserNotificationAction&lt;/li&gt;
+&lt;li&gt;每个推送都可以设置一组动作，使用UIUserNotificationCategory&lt;/li&gt;
+&lt;li&gt;这些动作分组在应用启动时就需要注册到UIUserNotificationSettings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;用户动作-UIUserNotificationAction&quot;&gt;&lt;a href=&quot;#用户动作-UIUserNotificationAction&quot; class=&quot;headerlink&quot; title=&quot;用户动作(UIUserNotificationAction)&quot;&gt;&lt;/a&gt;用户动作(UIUserNotificationAction)&lt;/h3&gt;&lt;p&gt;用户行为是app收到推送后，可以操作的一些按钮和输入框，这里讲一下UIUserNotificationAction都包含哪些属性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;identifier&lt;/strong&gt; 动作的唯一标识符，可以通过它获取动作本身。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;title&lt;/strong&gt; 动作按钮的title&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;behavior(iOS9引入的)&lt;/strong&gt; 是个UIUserNotificationActionBehavior的枚举类型。包含两个枚举值：&lt;br&gt;UIUserNotificationActionBehaviorDefault 是默认行为。&lt;br&gt;UIUserNotificationActionBehaviorTextInput 显示一个输入框，用户可以输入内容。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters(iOS9引入的)&lt;/strong&gt; 可以设定Action的一些属性类型。举例：可以改变输入框右边button的标题，只要把[NSDictionary dictionaryWithObject:@”评论” forKey:UIUserNotificationTextInputActionButtonTitleKey]赋值给parameters就可以。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;activationMode&lt;/strong&gt; 点击或者滑动推送打开应用的模式，是个UIUserNotificationActivationMode枚举类型，包含UIUserNotificationActivationModeForeground：打开展示应用。&lt;br&gt;UIUserNotificationActivationModeBackground：不打开应用或者在后台显示。这两种枚举值&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;authenticationRequired&lt;/strong&gt; 进入应用之前是否解锁设备，如果activationMode为UIUserNotificationActivationModeForeground模式，则这个属性可以忽略。否则需要判断是否解锁。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;destructive&lt;/strong&gt; 动作按钮显示为红色背景，起到警示的作用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注意创建动作时要使用UIMutableUserNotificationAction这个类&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;动作分组-UIUserNotificationCategory&quot;&gt;&lt;a href=&quot;#动作分组-UIUserNotificationCategory&quot; class=&quot;headerlink&quot; title=&quot;动作分组(UIUserNotificationCategory)&quot;&gt;&lt;/a&gt;动作分组(UIUserNotificationCategory)&lt;/h3&gt;&lt;p&gt;可以把创建的一系列动作加入一个分组中，创建分组需要调用UIMutableUserNotificationCategory中的方法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)setActions:(nullable NSArray&amp;lt;UIUserNotificationAction *&amp;gt; *)actions forContext:(UIUserNotificationActionContext)context
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中 actions为一系列动作的数组。&lt;br&gt;UIUserNotificationActionContext包含两个枚举值：UIUserNotificationActionContextDefault 表示推送通知最多能显示4个按钮&lt;br&gt;UIUserNotificationActionContextMinimal 表示推送通知最多能显示2个按钮&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;属性&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;identifier&lt;/strong&gt;：分组的唯一标识符，一般用在UILocalNotification的Category。&lt;/p&gt;
+&lt;h3 id=&quot;通知设置-UIUserNotificationSettings&quot;&gt;&lt;a href=&quot;#通知设置-UIUserNotificationSettings&quot; class=&quot;headerlink&quot; title=&quot;通知设置(UIUserNotificationSettings)&quot;&gt;&lt;/a&gt;通知设置(UIUserNotificationSettings)&lt;/h3&gt;&lt;p&gt;把创建的分组加入到UIUserNotificationSettings中，需要调用方法： &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+ (instancetype)settingsForTypes:(UIUserNotificationType)types
+                  categories:(nullable NSSet&amp;lt;UIUserNotificationCategory *&amp;gt; *)categories;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中types为UIUserNotificationType枚举类型。categories为一系列分组。&lt;/p&gt;
+&lt;h3 id=&quot;两个Key值&quot;&gt;&lt;a href=&quot;#两个Key值&quot; class=&quot;headerlink&quot; title=&quot;两个Key值&quot;&gt;&lt;/a&gt;两个Key值&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;UIUserNotificationTextInputActionButtonTitleKey&lt;/strong&gt; 设置输入框右边action按钮的标题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UIUserNotificationActionResponseTypedTextKey&lt;/strong&gt; action触发回调，可以通过该值获取输入框的内容。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;举例说明&quot;&gt;&lt;a href=&quot;#举例说明&quot; class=&quot;headerlink&quot; title=&quot;举例说明&quot;&gt;&lt;/a&gt;举例说明&lt;/h3&gt;&lt;p&gt;下面举例来说明新特性如何使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;不带输入框&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)registerLocalNotificationSettings
+{
+       UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+    action1.identifier = @&amp;quot;action1&amp;quot;;
+    action1.title = @&amp;quot;接受&amp;quot;;
+    action1.behavior =     UIUserNotificationActionBehaviorDefault;
+    action1.activationMode = UIUserNotificationActivationModeForeground;
+
+    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
+    action2.identifier = @&amp;quot;action2&amp;quot;;
+    action2.title = @&amp;quot;拒绝&amp;quot;;
+    action2.behavior = UIUserNotificationActionBehaviorDefault;
+    action2.activationMode = UIUserNotificationActivationModeBackground;
+    action1.authenticationRequired = YES;
+    action1.destructive = YES;
+
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+    category.identifier = @&amp;quot;alert&amp;quot;;
+    [category setActions:@[action1,action2] 
+    forContext:UIUserNotificationActionContextMinimal];
+
+    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:[NSSet setWithObjects:category, nil]];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建一个基于时间的本地推送,然后把UILocalNotification的category赋值为”alert”，效果图如下:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/local_1.png&quot; alt=&quot;&quot;&gt; &lt;img src=&quot;local-notification/local_2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;点击“接受”和“拒绝”，会调用代理回调方法如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler
+{
+    if ([identifier isEqualToString:@&amp;quot;action1&amp;quot;]) {
+        NSLog(@&amp;quot;接受&amp;quot;);
+    }
+    else if ([identifier isEqualToString:@&amp;quot;action2&amp;quot;])
+    {
+        NSLog(@&amp;quot;拒绝&amp;quot;);
+    }
+
+    if(completionHandler)
+    {
+        completionHandler();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;根据action不同的identifier来做出相应的处理，这里“action1”表示&lt;strong&gt;“接受”&lt;/strong&gt;按钮被点击，“action2”表示&lt;strong&gt;“拒绝”&lt;/strong&gt;按钮被点击。&lt;/p&gt;
+&lt;p&gt;这里要说明一下，你会发现不管是锁屏状态或者是顶部Banner条，都只能最多显示两个按钮，那么四个按钮该如何显示呢？需要你把推送显示效果变成弹出框的形式，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/local_3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;操作步骤如下：打开设置–&amp;gt;通知–&amp;gt;应用本身-&amp;gt;把“横幅”显示改成“提醒”显示，这样就OK了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;带输入框&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)registerLocalNotificationSettings
+{
+       UIMutableUserNotificationAction *action1 = [[UIMutableUserNotificationAction alloc] init];
+    action1.identifier = @&amp;quot;action1&amp;quot;;
+    action1.parameters = @{UIUserNotificationTextInputActionButtonTitleKey:@&amp;quot;评论&amp;quot;};
+    action1.title = @&amp;quot;评论&amp;quot;;
+    action1.behavior =     UIUserNotificationActionBehaviorDefault;
+    action1.activationMode = UIUserNotificationActivationModeForeground;
+
+    UIMutableUserNotificationAction *action2 = [[UIMutableUserNotificationAction alloc] init];
+    action2.identifier = @&amp;quot;action2&amp;quot;;
+    action2.title = @&amp;quot;拒绝&amp;quot;;
+    action2.behavior = UIUserNotificationActionBehaviorDefault;
+    action2.activationMode = UIUserNotificationActivationModeBackground;
+    action1.authenticationRequired = YES;
+    action1.destructive = YES;
+
+    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+    category.identifier = @&amp;quot;alert&amp;quot;;
+    [category setActions:@[action1,action2] 
+    forContext:UIUserNotificationActionContextMinimal];
+
+    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type categories:[NSSet setWithObjects:category, nil]];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要创建一个本地通知UILocalNotification，然后把它的category属性赋值为“alert”，效果图如下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/local_4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;点击“评论“按钮，效果变成如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;local-notification/local_5.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个时候会出现输入框，让用户输入内容，输入完内容，点击右边的”评论“，应用调用回调方法如下:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
+{
+    if ([identifier isEqualToString:@&amp;quot;action1&amp;quot;]) {
+        NSLog(@&amp;quot;评论&amp;quot;);
+        NSString *msg = responseInfo[UIUserNotificationActionResponseTypedTextKey];
+        NSLog(@&amp;quot;msg = %@&amp;quot;,msg);
+    }
+    else if ([identifier isEqualToString:@&amp;quot;action2&amp;quot;])
+    {
+            NSLog(@&amp;quot;拒绝&amp;quot;);
+    }
+
+    if(completionHandler)
+    {
+        completionHandler();
+        }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在代理回调方法中可通过UIUserNotificationActionResponseTypedTextKey这个键获取用户输入的内容。&lt;/p&gt;
+&lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;以上就是本地推送所有的内容，大家可以根据需求灵活的运用本地推送。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://dayupcui.github.io/categories/iOS/"/>
+    
+    
+      <category term="notification" scheme="http://dayupcui.github.io/tags/notification/"/>
+    
+  </entry>
   
   <entry>
     <title>一个很棒的博客框架Hexo详细介绍</title>
