@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dayupcui.github.io/"/>
-  <updated>2016-03-21T16:37:36.000Z</updated>
+  <updated>2016-03-22T03:16:27.000Z</updated>
   <id>http://dayupcui.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://dayupcui.github.io/2016/03/16/iOS/local-notification/"/>
     <id>http://dayupcui.github.io/2016/03/16/iOS/local-notification/</id>
     <published>2016-03-16T14:14:16.000Z</published>
-    <updated>2016-03-21T16:37:36.000Z</updated>
+    <updated>2016-03-22T03:16:27.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;最近由于项目原因需要加入本地推送，我就把本地推送相关的API官方文档看了一遍，说实话，苹果的官方文档有些描述确实不好理解，关键是描述的太模糊，不够详细，接下来我就把本地推送相关的知识梳理一下。&lt;/p&gt;
 &lt;h1 id=&quot;本地推送-UILocalNotification&quot;&gt;&lt;a href=&quot;#本地推送-UILocalNotification&quot; class=&quot;headerlink&quot; title=&quot;本地推送(UILocalNotification)&quot;&gt;&lt;/a&gt;本地推送(UILocalNotification)&lt;/h1&gt;&lt;p&gt;本地推送是相对于远程推送来说的，苹果为什么要加入本地推送，这里要说一下它的特点：&lt;/p&gt;
@@ -84,9 +84,9 @@ locNotification.category = @&amp;quot;alert&amp;quot;;
 locMan.delegate = self;
 [locMan requestWhenInUseAuthorization];
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在info.plist中加入如下图:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/plist.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/plist.jpg&quot; alt=&quot;plist.jpg&quot; title=&quot;&quot;&gt;
 &lt;p&gt;当程序运行到“[locMan requestWhenInUseAuthorization];”这一句时会弹出对话框:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/alert.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/alert.png&quot; alt=&quot;alert.png&quot; title=&quot;&quot;&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;获取用户权限的回调&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- (void)locationManager:(CLLocationManager *)manager
@@ -191,7 +191,7 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建一个基于时间的本地推送,然后把UILocalNotification的category赋值为”alert”，效果图如下:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/local_1.png&quot; alt=&quot;&quot;&gt; &lt;img src=&quot;local-notification/local_2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/local_1.png&quot; alt=&quot;local_1.png&quot; title=&quot;&quot;&gt; &lt;img src=&quot;/2016/03/16/iOS/local-notification/local_2.png&quot; alt=&quot;local_2.png&quot; title=&quot;&quot;&gt;
 &lt;p&gt;点击“接受”和“拒绝”，会调用代理回调方法如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler
 {
@@ -210,7 +210,7 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;根据action不同的identifier来做出相应的处理，这里“action1”表示&lt;strong&gt;“接受”&lt;/strong&gt;按钮被点击，“action2”表示&lt;strong&gt;“拒绝”&lt;/strong&gt;按钮被点击。&lt;/p&gt;
 &lt;p&gt;这里要说明一下，你会发现不管是锁屏状态或者是顶部Banner条，都只能最多显示两个按钮，那么四个按钮该如何显示呢？需要你把推送显示效果变成弹出框的形式，如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/local_3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/local_3.png&quot; alt=&quot;local_3.png&quot; title=&quot;&quot;&gt;
 &lt;p&gt;操作步骤如下：打开设置–&amp;gt;通知–&amp;gt;应用本身-&amp;gt;把“横幅”显示改成“提醒”显示，这样就OK了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;带输入框&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- (void)registerLocalNotificationSettings
@@ -240,9 +240,9 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要创建一个本地通知UILocalNotification，然后把它的category属性赋值为“alert”，效果图如下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/local_4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/local_4.png&quot; alt=&quot;local_4.png&quot; title=&quot;&quot;&gt;
 &lt;p&gt;点击“评论“按钮，效果变成如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;local-notification/local_5.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;img src=&quot;/2016/03/16/iOS/local-notification/local_5.png&quot; alt=&quot;local_5.png&quot; title=&quot;&quot;&gt;
 &lt;p&gt;这个时候会出现输入框，让用户输入内容，输入完内容，点击右边的”评论“，应用调用回调方法如下:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler
 {
@@ -259,7 +259,7 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
     if(completionHandler)
     {
         completionHandler();
-        }
+    }
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在代理回调方法中可通过UIUserNotificationActionResponseTypedTextKey这个键获取用户输入的内容。&lt;/p&gt;
 &lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;以上就是本地推送所有的内容，大家可以根据需求灵活的运用本地推送。&lt;/p&gt;
