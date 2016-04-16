@@ -11,28 +11,25 @@
     
 
     
-    <meta name="description" content="#前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
-#通知中心
-先看一下官方文档关于Notification在多线程中的解释：
+    <meta name="description" content="前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
+通知中心先看一下官方文档关于Notification在多线程中的解释：
 In a multithreaded application, notifications are always 
-delivered in the thread in which the notificati">
+delivered in the thread in which the notification">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程环境下Notification的问题">
 <meta property="og:url" content="http://dayupcui.github.io/2016/04/16/iOS/notification-async/index.html">
 <meta property="og:site_name" content="宏超的技术博客">
-<meta property="og:description" content="#前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
-#通知中心
-先看一下官方文档关于Notification在多线程中的解释：
+<meta property="og:description" content="前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
+通知中心先看一下官方文档关于Notification在多线程中的解释：
 In a multithreaded application, notifications are always 
-delivered in the thread in which the notificati">
-<meta property="og:updated_time" content="2016-04-16T02:41:21.000Z">
+delivered in the thread in which the notification">
+<meta property="og:updated_time" content="2016-04-16T02:46:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程环境下Notification的问题">
-<meta name="twitter:description" content="#前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
-#通知中心
-先看一下官方文档关于Notification在多线程中的解释：
+<meta name="twitter:description" content="前言最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。
+通知中心先看一下官方文档关于Notification在多线程中的解释：
 In a multithreaded application, notifications are always 
-delivered in the thread in which the notificati">
+delivered in the thread in which the notification">
 
     
     <link rel="alternative" href="/atom.xml" title="宏超的技术博客" type="application/atom+xml">
@@ -102,13 +99,12 @@ delivered in the thread in which the notificati">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通知中心"><span class="toc-number">2.</span> <span class="toc-text">通知中心</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li></ol>
 		
 		</div>
 		
-		<p>#前言<br>最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。</p>
-<p>#通知中心</p>
-<p>先看一下官方文档关于Notification在多线程中的解释：</p>
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近我看了一篇文章是关于多线程和Notification的问题，我这里mark一下，并且转载了相关的文章。</p>
+<h1 id="通知中心"><a href="#通知中心" class="headerlink" title="通知中心"></a>通知中心</h1><p>先看一下官方文档关于Notification在多线程中的解释：</p>
 <pre><code>In a multithreaded application, notifications are always 
 delivered in the thread in which the notification was posted,
 which may not be the same thread in which an observer registered 
@@ -377,7 +373,7 @@ NSNotificationCenter
 <li>使用带有安全生命周期的对象，这一点对象单例对象来说再合适不过了，在应用的整个生命周期都不会被释放。</li>
 <li>使用代理。</li>
 </ol>
-<p>#小结<br>NSNotificationCenter虽然是线程安全的，但不要被这个事实所误导。在涉及到多线程时，我们还是需要多加小心，避免出现上面的线程问题。想进一步了解的话，可以查看Observers and Thread Safety。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>NSNotificationCenter虽然是线程安全的，但不要被这个事实所误导。在涉及到多线程时，我们还是需要多加小心，避免出现上面的线程问题。想进一步了解的话，可以查看Observers and Thread Safety。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -436,7 +432,7 @@ NSNotificationCenter
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通知中心"><span class="toc-number">2.</span> <span class="toc-text">通知中心</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li></ol>
  
   </div>
 
