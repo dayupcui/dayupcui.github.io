@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://dayupcui.github.io/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/</loc>
+    
+    <lastmod>2016-04-16T02:38:51.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://dayupcui.github.io/2016/03/16/iOS/local-notification/</loc>
     
     <lastmod>2016-03-22T03:16:27.000Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://dayupcui.github.io/2016/03/08/%E6%A1%86%E6%9E%B6/github-hexo-blog/</loc>
     
     <lastmod>2016-03-12T04:22:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://dayupcui.github.io/2016/03/10/%E6%A1%86%E6%9E%B6/hexo-intro/</loc>
-    
-    <lastmod>2016-03-12T04:21:59.000Z</lastmod>
     
   </url>
   
